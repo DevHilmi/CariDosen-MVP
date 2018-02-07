@@ -1,4 +1,4 @@
 # CariDosen-MVP
 
-Implementation of [a link](https://github.com/googlesamples/android-architecture/tree/todo-mvp)
+Implementation of [android-architecture MVP](https://github.com/googlesamples/android-architecture/tree/todo-mvp)
 
