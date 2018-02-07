@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorPrimaryDark" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="70dp"
+            android:id="@+id/image_dosen"
+            android:layout_margin="1dp"
+            android:layout_marginRight="7dp"
+            android:layout_marginLeft="7dp"
+            android:src="@mipmap/ic_launcher"
+            android:contentDescription="@string/gambar_dosen" />
+        <TextView
+            android:id="@+id/text_nama_dosen"
+            android:layout_width="0dp"
+            android:padding="8dp"
+            android:gravity="center_vertical"
+            android:textStyle="bold"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/nama_dosen" />
+
+        <TextView
+            android:id="@+id/text_status_dosen"
+            android:layout_width="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_height="match_parent"
+            android:text="@string/status" />
+    </LinearLayout>
+
+
+</LinearLayout>
