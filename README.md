@@ -6,5 +6,5 @@ Implementation of [android-architecture MVP](https://github.com/googlesamples/an
 
 <img src="https://github.com/googlesamples/android-architecture/wiki/images/mvp.png" alt="Illustration of the MVP architecture for this version of the app."/>
 
-![](https://i.imgur.com/hpC0t6U.gifv)
+![Alt Text](https://i.imgur.com/hpC0t6U.gif)
 
