@@ -12,25 +12,74 @@ import rizaldev.caridosenmvp.data.Dosen;
 
 public class DosenRepository implements DosenDataSource {
 
+    private static DosenRepository INSTANCE = null;
+
     private final DosenDataSource dosenRemoteDataSource;
 
-    public DosenRepository(@NonNull DosenDataSource dosenRemoteDataSource) {
+    private final DosenDataSource dosenLocalDataSource;
+
+    boolean localDirty = true;
+
+    public DosenRepository(@NonNull DosenDataSource dosenRemoteDataSource, @NonNull DosenDataSource dosenLocalDataSource) {
         this.dosenRemoteDataSource = dosenRemoteDataSource;
+        this.dosenLocalDataSource = dosenLocalDataSource;
+    }
+
+    public static DosenRepository getInstance(@NonNull DosenDataSource dosenRemoteDataSource, @NonNull DosenDataSource dosenLocalDataSource) {
+        if (INSTANCE == null) {
+            INSTANCE = new DosenRepository(dosenRemoteDataSource, dosenLocalDataSource);
+        }
+        return INSTANCE;
     }
 
     @Override
     public void getAllDosen(final GetDosenCallBack dosenCallBack) {
-        dosenRemoteDataSource.getAllDosen(new GetDosenCallBack() {
-            @Override
-            public void onDosenLoaded(List<Dosen> dosens) {
-                dosenCallBack.onDosenLoaded(dosens);
-            }
+        if(!localDirty){
+            dosenLocalDataSource.getAllDosen(new GetDosenCallBack() {
+                @Override
+                public void onDosenLoaded(List<Dosen> dosens) {
+                    dosenCallBack.onDosenLoaded(dosens);
+                }
 
-            @Override
-            public void onDataNotAvailable() {
+                @Override
+                public void onDataNotAvailable() {
 
-            }
-        });
+                }
+            });
+        }else{
+            dosenRemoteDataSource.getAllDosen(new GetDosenCallBack() {
+                @Override
+                public void onDosenLoaded(List<Dosen> dosens) {
+                    refreshLocalDataSource(dosens);
+                   // localDirty = false;
+                    dosenCallBack.onDosenLoaded(dosens);
+                }
+
+                @Override
+                public void onDataNotAvailable() {
+
+                }
+            });
+        }
+
+    }
+
+    @Override
+    public void saveDosen(Dosen dosen) {
+
+    }
+
+    @Override
+    public void deleteAllDosen() {
+
+    }
+
+
+    private void refreshLocalDataSource(List<Dosen> dosens) {
+        dosenLocalDataSource.deleteAllDosen();
+        for (Dosen dosen : dosens) {
+            dosenLocalDataSource.saveDosen(dosen);
+        }
     }
 
 }

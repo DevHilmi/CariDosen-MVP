@@ -23,6 +23,16 @@ import rizaldev.caridosenmvp.data.source.DosenDataSource;
 
 public class DosenRemoteDataSource implements DosenDataSource {
 
+    private static DosenRemoteDataSource INSTANCE;
+
+
+    public static DosenRemoteDataSource getInstance(){
+        if(INSTANCE ==null){
+            INSTANCE = new DosenRemoteDataSource();
+        }
+        return INSTANCE;
+    }
+
     @SuppressLint("StaticFieldLeak")
     @Override
     public void getAllDosen(final GetDosenCallBack dosenCallBack) {
@@ -41,13 +51,15 @@ public class DosenRemoteDataSource implements DosenDataSource {
                     Elements eles = doc.select("tbody > tr");
                     for (Element ele : eles) {
                         Elements cols = ele.select("td");
+                        Element id = cols.get(1).select("div.media > a.pull-left").first();
                         Element nama = cols.get(1).select("div.media-body > b > a > span.text.text-default").first();
                         Element image = cols.get(1).select("div.media > a.pull-left > img").first();
                         Element hadir = cols.get(1).select("div.col-md-2 > div.label").first();
+                        String idDosen = id.attr("href");
                         String namaDosen = nama.text();
                         String image_url = image.attr("src");
                         Boolean hadirDosen = hadir.text().equals("Hadir");
-                        dosens.add(new Dosen(namaDosen, image_url, hadirDosen));
+                        dosens.add(new Dosen(idDosen,namaDosen, image_url, hadirDosen));
                     }
                 }
                 return dosens;
@@ -59,6 +71,16 @@ public class DosenRemoteDataSource implements DosenDataSource {
                 dosenCallBack.onDosenLoaded(dosens);
             }
         }.execute();
+
+    }
+
+    @Override
+    public void saveDosen(Dosen dosen) {
+
+    }
+
+    @Override
+    public void deleteAllDosen() {
 
     }
 

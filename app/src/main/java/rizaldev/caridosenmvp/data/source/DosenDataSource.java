@@ -16,4 +16,8 @@ public interface DosenDataSource {
         void onDataNotAvailable();
     }
     void getAllDosen(GetDosenCallBack dosenCallBack);
+
+    void saveDosen(Dosen dosen);
+
+    void deleteAllDosen();
 }
